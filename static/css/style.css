@@ -183,7 +183,7 @@ main {
 
 /* Category Icons */
 .category-icon {
-    font-size: 4rem;
+    font-size: 3rem;
     color: #1a1a2e;
     transition: all 0.3s ease;
     margin-bottom: 1.5rem;
@@ -194,6 +194,14 @@ main {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+}
+
+/* SVG Category Icon Override */
+.category-icon .category-svg-icon {
+    font-size: 3rem;
+    color: #d4af37;
+    width: 48px;
+    height: 48px;
 }
 
 /* Footwear Card Background */
@@ -779,16 +787,36 @@ html {
 @media (max-width: 768px) {
     .category-svg-icon,
     .category-image-icon {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
+    }
+    
+    .category-icon {
+        font-size: 2.5rem;
+    }
+    
+    .category-icon .category-svg-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 2.5rem;
     }
 }
 
 @media (max-width: 576px) {
     .category-svg-icon,
     .category-image-icon {
-        width: 36px;
-        height: 36px;
+        width: 32px;
+        height: 32px;
+    }
+    
+    .category-icon {
+        font-size: 2rem;
+    }
+    
+    .category-icon .category-svg-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 2rem;
     }
 }
 
