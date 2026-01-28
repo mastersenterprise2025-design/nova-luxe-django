@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category.name }} | Nova Luxe{% endblock %}
+{% block content %}
+
+<div class="container my-5">
+  <h2 class="mb-4">{{ category.name }}</h2>
+
+  <div class="row">
+    {% if products %}
+      {% for product in products %}
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text">₹{{ product.price }}</p>
+
+              <div class="mt-auto">
+                <a href="#" class="btn btn-outline-dark btn-sm">
+                  View
+                </a>
+
+                <a href="{% url 'store:add_to_cart' product.id %}" class="btn btn-dark btn-sm">
+                  Add to Cart
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No products found in this category.</p>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

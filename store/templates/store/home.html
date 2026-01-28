@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Nova Luxe | Home{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content text-center">
+        <h1 class="display-3 fw-bold mb-4">Welcome to Nova Luxe</h1>
+        <p class="lead mb-5">Discover our premium collection of curated treasures</p>
+        <a href="#categories" class="btn btn-warning btn-lg px-5 py-3 fw-bold text-uppercase">
+            Shop Now
+        </a>
+    </div>
+</div>
+
+<!-- Categories Section -->
+<section id="categories" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Shop by Category</h2>
+        <div class="row g-4">
+            <!-- Footwear Card -->
+            <div class="col-md-4">
+                <div class="card h-100 category-card text-center p-4 footwear-card">
+                    <div class="category-icon mb-3">
+                        <svg class="category-svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2 18v2h20v-2H2zm1-10c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v6H3V8zm2 1c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zm14 0c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Footwear</h3>
+                    <p class="card-text text-muted">Men • Women • Kids</p>
+                    <div class="mt-auto">
+                        <a href="{% url 'store:footwear' %}" class="btn btn-warning btn-lg">Explore</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Jewellery Card -->
+            <div class="col-md-4">
+                <div class="card h-100 category-card text-center p-4 jewellery-card">
+                    <div class="category-icon mb-3">
+                        <i class="bi bi-gem"></i>
+                    </div>
+                    <h3 class="card-title">Jewellery</h3>
+                    <p class="card-text text-muted">Bangles • Payal • Necklace</p>
+                    <div class="mt-auto">
+                        <a href="{% url 'store:jewellery' %}" class="btn btn-warning btn-lg">Explore</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Clothes Card -->
+            <div class="col-md-4">
+                <div class="card h-100 category-card text-center p-4 clothes-card">
+                    <div class="category-icon mb-3">
+                        <i class="bi bi-bag"></i>
+                    </div>
+                    <h3 class="card-title">Clothes</h3>
+                    <p class="card-text text-muted">Men • Women • Kids</p>
+                    <div class="mt-auto">
+                        <a href="{% url 'store:clothes' %}" class="btn btn-warning btn-lg">Explore</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Discounts/Sales Banner -->
+<section id="discounts-banner" class="py-4">
+    <div class="container">
+        <div class="discount-banner text-center">
+            <div class="banner-content">
+                <span class="banner-icon">🔥</span>
+                <h3 class="banner-text">Sale is Live — Up to 30% Off on Footwear & Jewellery</h3>
+                <a href="#categories" class="btn btn-danger btn-lg banner-btn">Shop Sale</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<div class="features">
+    <h3>Experience Excellence</h3>
+    <ul>
+        <li>Luxury product catalog</li>
+        <li>Exclusive collections</li>
+        <li>Premium shopping experience</li>
+        <li>Impeccable service</li>
+    </ul>
+</div>
+{% endblock %}

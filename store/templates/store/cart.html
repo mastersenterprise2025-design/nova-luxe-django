@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Cart | Nova Luxe{% endblock %}
+
+{% block content %}
+<!-- CSRF Token for AJAX -->
+{% csrf_token %}
+
+<div class="container my-5">
+    <!-- Cart Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Shopping Cart</h1>
+        <p class="lead text-muted">
+            {% if cart_count %}
+                You have {{ cart_count }} item{{ cart_count|pluralize }} in your cart
+            {% else %}
+                Your cart is empty
+            {% endif %}
+        </p>
+    </div>
+
+    <!-- Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if cart_items %}
+        <!-- Cart Items -->
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0">Cart Items</h5>
+                    </div>
+                    <div class="card-body">
+                        {% for item in cart_items %}
+                            <div class="cart-item d-flex align-items-center border-bottom pb-3 mb-3">
+                                <!-- Product Image -->
+                                <div class="product-image-small me-3">
+                                    {% if item.product.image %}
+                                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="rounded" style="width: 80px; height: 80px; object-fit: cover;">
+                                    {% else %}
+                                        <div class="rounded bg-light d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                            <i class="bi bi-image text-muted"></i>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Product Details -->
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">{{ item.product.name }}</h6>
+                                    <p class="text-muted small mb-1">{{ item.product.category.name }}</p>
+                                    <p class="fw-bold text-primary mb-0">${{ item.product.price }}</p>
+                                    <p class="text-muted small mb-0">Subtotal: $<span id="subtotal-{{ item.product.id }}">{{ item.subtotal|floatformat:2 }}</span></p>
+                                </div>
+                                
+                                <!-- Quantity and Actions -->
+                                <div class="d-flex align-items-center">
+                                    <div class="quantity-control me-3">
+                                        <div class="input-group" style="width: 120px;">
+                                            <button class="btn btn-outline-secondary btn-sm" type="button" 
+                                                    onclick="updateQuantity({{ item.product.id }}, 'decrease')">
+                                                <i class="bi bi-dash"></i>
+                                            </button>
+                                            <input type="text" class="form-control text-center" value="{{ item.quantity }}" 
+                                                   id="quantity-{{ item.product.id }}" readonly>
+                                            <button class="btn btn-outline-secondary btn-sm" type="button" 
+                                                    onclick="updateQuantity({{ item.product.id }}, 'increase')">
+                                                <i class="bi bi-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="cart-item-actions">
+                                        <a href="{% url 'store:remove_from_cart' item.product.id %}" 
+                                           class="btn btn-sm btn-outline-danger" 
+                                           onclick="return confirm('Remove this item from cart?')">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cart Summary -->
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0">Order Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Subtotal ({{ cart_count }} items):</span>
+                            <span id="subtotal-total">${{ total_price|floatformat:2 }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Shipping:</span>
+                            <span>Free</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Tax:</span>
+                            <span id="tax-total">${{ tax|floatformat:2 }}</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-3">
+                            <h5>Total:</h5>
+                            <h5 class="text-primary" id="grand-total">${{ grand_total|floatformat:2 }}</h5>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <a href="#" class="btn btn-warning btn-lg">Proceed to Checkout</a>
+                            <a href="{% url 'store:home' %}" class="btn btn-outline-dark">Continue Shopping</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <!-- Empty Cart -->
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="cart-empty empty-state">
+                    <i class="bi bi-cart-x empty-icon"></i>
+                    <h3>Your Cart is Empty</h3>
+                    <p>Looks like you haven't added any items to your cart yet. Start shopping to fill it up with amazing products!</p>
+                    <div class="action-buttons">
+                        <a href="{% url 'store:footwear' %}" class="btn btn-outline-dark">Footwear</a>
+                        <a href="{% url 'store:jewellery' %}" class="btn btn-outline-dark">Jewellery</a>
+                        <a href="{% url 'store:clothes' %}" class="btn btn-outline-dark">Clothes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+function updateQuantity(productId, action) {
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+    fetch(`/cart/update/${productId}/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': csrfToken,
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: `action=${action}`
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            // Update quantity input
+            document.getElementById(`quantity-${productId}`).value = data.new_quantity;
+            
+            // Update subtotal for this item
+            document.getElementById(`subtotal-${productId}`).textContent = data.new_subtotal.toFixed(2);
+            
+            // Update cart summary
+            document.getElementById('subtotal-total').textContent = data.total_price.toFixed(2);
+            document.getElementById('tax-total').textContent = data.tax.toFixed(2);
+            document.getElementById('grand-total').textContent = data.grand_total.toFixed(2);
+            
+            // Update cart count in navbar
+            const cartBadge = document.querySelector('.badge.rounded-pill.bg-danger');
+            if (cartBadge) {
+                cartBadge.textContent = data.cart_count;
+            }
+            
+            // Update cart count in header
+            const cartCountElement = document.querySelector('.lead');
+            if (cartCountElement && data.cart_count > 0) {
+                cartCountElement.innerHTML = `You have ${data.cart_count} item${data.cart_count !== 1 ? 's' : ''} in your cart`;
+            }
+        } else {
+            alert(data.message || 'Error updating quantity');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error updating quantity: ' + error.message);
+    });
+}
+</script>
+{% endblock %}

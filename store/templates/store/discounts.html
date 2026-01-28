@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block title %}Sales & Discounts | Nova Luxe{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">🔥 Discounts & Sales</h1>
+        <p class="lead text-muted">Amazing deals on premium products</p>
+    </div>
+
+    <!-- Discount Banner -->
+    <div class="discounts-banner text-center mb-5">
+        <div class="banner-content">
+            <span class="banner-icon">🔥</span>
+            <h3 class="banner-text">Limited Time Offers - Up to 30% Off!</h3>
+            <p class="banner-subtext">Shop our exclusive collection of discounted items</p>
+        </div>
+    </div>
+
+    <!-- Discounted Products Grid -->
+    <div class="row g-4">
+        {% if discounted_products %}
+            {% for product in discounted_products %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 product-card">
+                        <!-- Discount Badge -->
+                        <span class="badge bg-success position-absolute top-0 start-0 m-2">Sale</span>
+                        
+                        <!-- New Badge -->
+                        {% if product.is_latest %}
+                            <span class="badge bg-danger position-absolute top-0 end-0 m-2">New</span>
+                        {% endif %}
+                        
+                        <!-- Product Image -->
+                        <div class="product-image-container">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                            {% else %}
+                                <div class="card-img-top placeholder-image d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-tag text-muted" style="font-size: 3rem;"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Product Details -->
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text text-muted small">{{ product.category.name }}</p>
+                            <div class="price-section mb-3">
+                                <p class="card-text fw-bold text-primary">${{ product.price }}</p>
+                                <p class="card-text text-success small">On Sale</p>
+                            </div>
+                            
+                            <div class="mt-auto">
+                                <div class="btn-group w-100" role="group">
+                                    <a href="#" class="btn btn-outline-dark">View</a>
+                                    <a href="{% url 'store:add_to_cart' product.id %}" class="btn btn-warning">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="search-empty empty-state">
+                    <i class="bi bi-tag empty-icon"></i>
+                    <h3>No Discounts Available</h3>
+                    <p>No sale items at the moment. Check back soon for amazing deals and offers, or explore our full collections!</p>
+                    <div class="action-buttons">
+                        <a href="{% url 'store:footwear' %}" class="btn btn-outline-dark">Footwear</a>
+                        <a href="{% url 'store:jewellery' %}" class="btn btn-outline-dark">Jewellery</a>
+                        <a href="{% url 'store:clothes' %}" class="btn btn-outline-dark">Clothes</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.discounts-banner {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    margin-bottom: 3rem;
+    box-shadow: 0 10px 30px rgba(238, 90, 36, 0.3);
+    animation: pulse 2s infinite;
+}
+
+.banner-content {
+    position: relative;
+}
+
+.banner-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1rem;
+    animation: shimmer 1.5s infinite;
+}
+
+.banner-text {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.banner-subtext {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 0;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+@keyframes shimmer {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.price-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .banner-text {
+        font-size: 1.5rem;
+    }
+    
+    .banner-subtext {
+        font-size: 1rem;
+    }
+}
+</style>
+{% endblock %}

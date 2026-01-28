@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Load static tags -->
+    {% load static %}
+    
+    <!-- Dynamic Title Block -->
+    <title>{% block title %}Nova Luxe – Premium Jewellery, Footwear & Fashion{% endblock %}</title>
+    
+    <!-- Meta Description -->
+    <meta name="description" content="{% block meta_description %}Discover Nova Luxe - Your premier destination for premium jewellery, footwear, and fashion. Shop our curated collection of luxury products with exceptional quality and style.{% endblock %}">
+    
+    <!-- Meta Keywords -->
+    <meta name="keywords" content="{% block meta_keywords %}Nova Luxe, premium jewellery, luxury footwear, fashion accessories, online shopping, luxury brands, designer shoes, fine jewellery, fashion store{% endblock %}">
+    
+    <!-- Meta Robots -->
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="{% block og_title %}Nova Luxe – Premium Jewellery, Footwear & Fashion{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Discover Nova Luxe - Your premier destination for premium jewellery, footwear, and fashion. Shop our curated collection of luxury products with exceptional quality and style.{% endblock %}">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}">
+    <meta property="og:site_name" content="Nova Luxe">
+    <meta property="og:image" content="{% block og_image %}{% static 'images/nova-luxe-og-image.jpg' %}{% endblock %}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}Nova Luxe – Premium Jewellery, Footwear & Fashion{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Discover Nova Luxe - Your premier destination for premium jewellery, footwear, and fashion.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{% static 'images/nova-luxe-twitter-image.jpg' %}{% endblock %}">
+    
+    <!-- Additional Meta Tags -->
+    <meta name="author" content="Nova Luxe">
+    <meta name="language" content="English">
+    <meta name="geo.region" content="IN">
+    <meta name="geo.placename" content="India">
+    <meta name="geo.position" content="20.5937;78.9629">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{% block canonical_url %}{{ request.build_absolute_uri }}{% endblock %}">
+    
+    <!-- Bootstrap CSS -->
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+</head>
+<body>
+    <!-- Bootstrap Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <!-- Logo -->
+            <a class="navbar-brand fw-bold text-uppercase letter-spacing-2" href="{% url 'store:home' %}">
+                Nova Luxe
+            </a>
+
+            <!-- Mobile toggle -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Main Navigation -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <!-- Home -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'store:home' %}">Home</a>
+                    </li>
+
+                    <!-- Footwear Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Footwear
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'store:footwear' %}">All Footwear</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Men</a></li>
+                            <li><a class="dropdown-item" href="#">Women</a></li>
+                            <li><a class="dropdown-item" href="#">Kids</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Jewellery -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'store:jewellery' %}">Jewellery</a>
+                    </li>
+
+                    <!-- Clothes Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Clothes
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'store:clothes' %}">All Clothes</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Men</a></li>
+                            <li><a class="dropdown-item" href="#">Women</a></li>
+                            <li><a class="dropdown-item" href="#">Kids</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Discounts -->
+                    <li class="nav-item">
+                        <a class="nav-link text-warning" href="{% url 'store:discounts' %}">Discounts</a>
+                    </li>
+
+                    <!-- Latest -->
+                    <li class="nav-item">
+                        <a class="nav-link text-info" href="{% url 'store:latest' %}">Latest</a>
+                    </li>
+
+                    <!-- Help -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Help</a>
+                    </li>
+                </ul>
+
+                <!-- Right side items -->
+                <div class="d-flex align-items-center">
+                    <!-- Search Bar -->
+                    <form class="d-flex me-3" role="search" method="GET" action="{% url 'store:search' %}">
+                        <input class="form-control form-control-sm" type="search" placeholder="Search products..." aria-label="Search" name="q">
+                        <button class="btn btn-outline-light btn-sm ms-1" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </form>
+
+                    <!-- Cart Icon -->
+                    <a class="btn btn-outline-light position-relative" href="{% url 'store:cart' %}">
+                        <i class="bi bi-cart3"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {% if request.session.cart %}{{ request.session.cart|length }}{% else %}0{% endif %}
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    
+    <footer class="bg-dark text-light">
+    <!-- Main Footer Content -->
+    <div class="container py-5">
+        <div class="row">
+            <!-- Left Column: Nova Luxe Brand -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="footer-brand">
+                    <h3 class="footer-logo">Nova Luxe</h3>
+                    <p class="footer-brand-text">
+                        Premium Jewellery, Footwear & Fashion
+                    </p>
+                </div>
+            </div>
+
+            <!-- Middle Column: Quick Links -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links list-unstyled">
+                    <li><a href="{% url 'store:home' %}" class="footer-link">Home</a></li>
+                    <li><a href="{% url 'store:footwear' %}" class="footer-link">Footwear</a></li>
+                    <li><a href="{% url 'store:jewellery' %}" class="footer-link">Jewellery</a></li>
+                    <li><a href="{% url 'store:clothes' %}" class="footer-link">Clothes</a></li>
+                    <li><a href="#" class="footer-link">Help</a></li>
+                </ul>
+            </div>
+
+            <!-- Right Column: Refer a Friend & Social Media -->
+            <div class="col-lg-4 col-md-12 mb-4">
+                <h4 class="footer-heading">Refer a Friend</h4>
+                <form class="refer-form mb-4">
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Enter friend's email" required>
+                        <button class="btn btn-warning" type="submit">Submit</button>
+                    </div>
+                </form>
+
+                <h4 class="footer-heading">Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-icon" aria-label="Instagram">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Facebook">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Twitter">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Copyright Line -->
+    <div class="footer-bottom border-top border-secondary">
+        <div class="container py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="footer-copyright mb-0">
+                        © 2026, Designed by brandmasterss.com
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- Floating WhatsApp Chat Button -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/919999999999" 
+           target="_blank" 
+           class="whatsapp-button"
+           title="Chat with us"
+           aria-label="Chat with us on WhatsApp">
+            <i class="bi bi-whatsapp"></i>
+        </a>
+    </div>
+
+    </body>
+</html>
