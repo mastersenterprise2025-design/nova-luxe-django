@@ -64,13 +64,13 @@
                                     <div class="quantity-control me-3">
                                         <div class="input-group" style="width: 120px;">
                                             <button class="btn btn-outline-secondary btn-sm" type="button" 
-                                                    onclick="updateQuantity({{ item.product.id }}, 'decrease')">
+                                                    onclick="updateQuantity('{{ item.product.id }}', 'decrease')">
                                                 <i class="bi bi-dash"></i>
                                             </button>
                                             <input type="text" class="form-control text-center" value="{{ item.quantity }}" 
                                                    id="quantity-{{ item.product.id }}" readonly>
                                             <button class="btn btn-outline-secondary btn-sm" type="button" 
-                                                    onclick="updateQuantity({{ item.product.id }}, 'increase')">
+                                                    onclick="updateQuantity('{{ item.product.id }}', 'increase')">
                                                 <i class="bi bi-plus"></i>
                                             </button>
                                         </div>

@@ -207,7 +207,7 @@ main {
 /* Footwear Card Background */
 .footwear-card {
     position: relative;
-    background: url('/static/images/footwear.jpg') center center/cover no-repeat;
+    background: url('../images/footwear.jpg') center center/cover no-repeat;
     background-color: rgba(26, 26, 46, 0.9);
 }
 
@@ -228,7 +228,7 @@ main {
 /* Jewellery Card Background */
 .jewellery-card {
     position: relative;
-    background: url('/static/images/jwellery.jpg') center center/cover no-repeat;
+    background: url('../images/jwellery.jpg') center center/cover no-repeat;
     background-color: rgba(26, 26, 46, 0.9);
 }
 
@@ -249,7 +249,7 @@ main {
 /* Clothes Card Background */
 .clothes-card {
     position: relative;
-    background: url('/static/images/clothess.jpg') center center/cover no-repeat;
+    background: url('../images/clothess.jpg') center center/cover no-repeat;
     background-color: rgba(26, 26, 46, 0.9);
 }
 
@@ -825,7 +825,7 @@ html {
     position: relative;
     height: 100vh;
     min-height: 600px;
-    background: url('/static/images/bg_image.jpg') center center/cover no-repeat;
+    background: url('../images/bg_image.jpg') center center/cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
